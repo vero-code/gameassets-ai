@@ -120,12 +120,22 @@ with gr.Blocks(theme=gr.themes.Soft()) as demo:
                 label="Base Prompt",
                 placeholder="e.g., a pixel art sword"
             )
+
+            gr.Examples(
+                examples=[
+                    ["assets/shield.png", "a pixel art shield"],
+                    ["assets/potion.png", "a magic potion bottle"],
+                ],
+                inputs=[image_input, prompt_input],
+                label="Click an example to start"
+            )
+
             generate_button = gr.Button("Generate Variations!", variant="primary")
 
         with gr.Column(scale=2):
-            single_output = gr.Image(label="Result", visible=False)
+            single_output = gr.Image(label="Result", visible=False, show_label=False)
             gallery_output = gr.Gallery(
-                label="Variations", columns=2, object_fit="contain", visible=True
+                label="Variations", columns=2, object_fit="contain", visible=True, show_label=False
             )
 
     # --- Dynamic UI update ---
