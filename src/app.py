@@ -125,29 +125,29 @@ def master_generate(mode: str, image: Image.Image, prompt: str):
         }
 
 # --- Gradio interface ---
-with gr.Blocks(theme=gr.themes.Soft()) as demo:
+with gr.Blocks(theme=gr.themes.Soft(), css="footer {display: none !important}") as demo:
     gr.Markdown(
         """
-        # GameAssets AI ⚔️
-        *AI-powered forge for indie developers. Upload a base sprite and instantly create endless fantasy variations.*
+        # GameAssets AI ⚔️ *AI-powered forge for indie developers. Upload a base sprite and instantly create endless fantasy variations.*
         """
     )
 
-    with gr.Row():
-        with gr.Column(scale=1):
-            image_input = gr.Image(type="pil", label="Base Sprite")
-
-            mode_selector = gr.Radio(
-                ["Single Image", "Inspiration Mode"],
-                label="Generation Mode",
-                value="Inspiration Mode" # Default
-            )
-
-            prompt_input = gr.Textbox(
-                label="Base Prompt",
-                placeholder="e.g., a pixel art sword"
-            )
-
+    with gr.Row(equal_height=True):
+        with gr.Column(scale=1, min_width=450):
+            image_input = gr.Image(type="pil", label="Base Sprite", height=480)
+            
+            with gr.Group():
+                mode_selector = gr.Radio(
+                    ["Single Image", "Inspiration Mode"],
+                    label="Generation Mode",
+                    value="Inspiration Mode" # Default
+                )
+                prompt_input = gr.Textbox(
+                    label="Base Prompt",
+                    placeholder="e.g., a pixel art sword",
+                    lines=2
+                )
+            
             generate_button = gr.Button("Generate Variations!", variant="primary")
 
             gr.Examples(
@@ -158,13 +158,14 @@ with gr.Blocks(theme=gr.themes.Soft()) as demo:
                     ["assets/boots.png", "a pair of ornate leather boots, fantasy armor"],
                 ],
                 inputs=[image_input, prompt_input],
-                label="Click an example to start"
+                label="Click an example to start",
+                examples_per_page=4
             )
-
-        with gr.Column(scale=2):
-            single_output = gr.Image(label="Result", visible=False, show_label=False)
+        
+        with gr.Column(scale=2, min_width=600):
+            single_output = gr.Image(label="Result", visible=False, show_label=False, height=480)
             gallery_output = gr.Gallery(
-                label="Variations", columns=2, object_fit="contain", visible=True, show_label=False
+                label="Variations", columns=2, object_fit="contain", visible=True, show_label=False, height=480
             )
 
     # --- Dynamic UI update ---
