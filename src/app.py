@@ -6,13 +6,19 @@ from PIL import Image
 import requests
 import io
 import tempfile
+import time
 
-load_dotenv()
-FAL_KEY = os.getenv("FAL_KEY")
-if not FAL_KEY:
-    raise ValueError("FAL_KEY is missing! Please add it to your .env file.")
+# --- DEBUG MODE ---
+# Set to False to use the real FAL API.
+DEBUG_MODE = True
 
-fal_client.api_key = FAL_KEY
+# --- FAL API Setup ---
+if not DEBUG_MODE:
+    load_dotenv()
+    FAL_KEY = os.getenv("FAL_KEY")
+    if not FAL_KEY:
+        raise ValueError("FAL_KEY is missing! Please add it to your .env file.")
+    fal_client.api_key = FAL_KEY
 
 STYLE_MODIFIERS = {
     "Fiery": "made of fire, lava, and embers",
@@ -20,6 +26,17 @@ STYLE_MODIFIERS = {
     "Ancient": "ancient, covered in moss and vines, weathered stone",
     "Magic": "glowing with magical energy, ethereal, enchanted runes",
 }
+
+# --- Dummy Data for Debugging ---
+DUMMY_IMAGES = [
+    "assets/shield.png",
+    "assets/mace.png",
+    "assets/potion.png",
+    "assets/boots.png"
+]
+for p in DUMMY_IMAGES:
+    if not os.path.exists(p):
+        raise FileNotFoundError(f"Debug image not found: {p}. Please make sure it's in the assets folder.")
 
 def upload_image_to_fal(image: Image.Image) -> str:
     """Saves the image, uploads it to FAL, and returns the URL."""
@@ -42,6 +59,11 @@ def generate_asset(input_image: Image.Image, prompt_text: str):
     if input_image is None: raise gr.Error("Please upload the source image!")
     if not prompt_text: raise gr.Error("Please enter a text prompt!")
 
+    if DEBUG_MODE:
+        print("DEBUG MODE: Simulating single image generation.")
+        time.sleep(1)
+        return Image.open(DUMMY_IMAGES[0])
+
     image_url = upload_image_to_fal(input_image)
 
     try:
@@ -60,6 +82,11 @@ def generate_variations(input_image: Image.Image, base_prompt_text: str):
     """
     if input_image is None: raise gr.Error("Please upload the source image!")
     if not base_prompt_text: raise gr.Error("Please enter a base prompt (e.g., 'a sword')!")
+
+    if DEBUG_MODE:
+        print("DEBUG MODE: Simulating variations generation.")
+        time.sleep(2)
+        return [Image.open(p) for p in DUMMY_IMAGES]
 
     image_url = upload_image_to_fal(input_image)
     output_images = []
@@ -121,16 +148,18 @@ with gr.Blocks(theme=gr.themes.Soft()) as demo:
                 placeholder="e.g., a pixel art sword"
             )
 
+            generate_button = gr.Button("Generate Variations!", variant="primary")
+
             gr.Examples(
                 examples=[
-                    ["assets/shield.png", "a pixel art shield"],
-                    ["assets/potion.png", "a magic potion bottle"],
+                    ["assets/shield.png", "an ancient pixel art shield with ornament"],
+                    ["assets/mace.png", "a heavy spiked mace, fantasy weapon"],
+                    ["assets/potion.png", "a magic potion bottle, bubbling with poison"],
+                    ["assets/boots.png", "a pair of ornate leather boots, fantasy armor"],
                 ],
                 inputs=[image_input, prompt_input],
                 label="Click an example to start"
             )
-
-            generate_button = gr.Button("Generate Variations!", variant="primary")
 
         with gr.Column(scale=2):
             single_output = gr.Image(label="Result", visible=False, show_label=False)
