@@ -1,0 +1,42 @@
+# Virtual Environment
+venv/
+.env
+
+# Cache and Temporary Files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+*$py.class
+
+# IDE / Editors
+.vscode/
+.idea/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test Documents
+.coverage
+*.pytest_cache/
+htmlcov/
+
+# Installation Files
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Tokens and Keys
+*.pem
+*.key
+*.crt
