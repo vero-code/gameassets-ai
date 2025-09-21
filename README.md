@@ -1,7 +1,17 @@
 # GameAssets AI ⚔️
-An AI-powered forge for indie developers to generate and transform game assets. Upload a base sprite and instantly create endless fantasy variations using the **FLUX.1 Kontext [dev]** model.
+
+[![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![Gradio](https://img.shields.io/badge/Gradio-UI-orange?logo=gradio)](https://www.gradio.app/)
+[![fal.ai](https://img.shields.io/badge/fal.ai-API-green?logo=fastapi&logoColor=white)](https://fal.ai)
+[![FLUX.1 Kontext](https://img.shields.io/badge/FLUX.1-Kontext-purple?logo=openai&logoColor=white)](https://blackforestlabs.ai/)
+
+An AI-powered forge for indie developers to generate and transform game assets. Upload a base sprite and instantly create endless fantasy variations using the **FLUX.1 Kontext [dev]** model. 
 
 *This project was built for the [Black Forest Labs - FLUX.1 Kontext [dev] Hackathon](https://devpost.com/software/gameassets-ai)*.
+
+![GameAssets AI Logo](assets/logo.png)
+
+🎥 Watch the demo video here: [YouTube link](https://youtu.be/7aJzwBhNUwQ)
 
 ## 🚀 Features
 

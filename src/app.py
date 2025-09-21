@@ -10,7 +10,7 @@ import time
 
 # --- DEBUG MODE ---
 # Set to False to use the real FAL API.
-DEBUG_MODE = True
+DEBUG_MODE = False
 
 # --- FAL API Setup ---
 if not DEBUG_MODE:
